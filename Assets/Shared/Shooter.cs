@@ -6,8 +6,10 @@ public class Shooter : MonoBehaviour
 {
     [SerializeField] float rateOfFire = 0.3f;
     [SerializeField] Projectile projectile;
+    [SerializeField] Transform hand;
+    [SerializeField] Transform aimTarget;
 
-    [HideInInspector]
+    //[HideInInspector]
     public Transform muzzle;
 
     float nextFireAllowed;
@@ -15,7 +17,9 @@ public class Shooter : MonoBehaviour
 
     private void Awake()
     {
-        muzzle = transform.Find("Muzzle");
+       // muzzle = transform.Find("Muzzle");
+        transform.SetParent(hand);
+        //aimTarget = GameObject.Find("Crosshair").transform;
     }
 
     public virtual void Fire()
@@ -27,10 +31,24 @@ public class Shooter : MonoBehaviour
 
         nextFireAllowed = Time.time + rateOfFire;
 
+        //muzzle.LookAt(aimTarget);
         Instantiate(projectile, muzzle.position, muzzle.rotation);
 
         canFire = true;
         
     }
+
+    //private void Update()
+    //{
+    //    Ray ray = Camera.main.ScreenPointToRay();
+    //    RaycastHit hitInfo;
+
+    //    if (Physics.Raycast(ray, out hitInfo))
+    //    {
+    //        if (hitInfo.collider.tag.Equals("Enemy"))
+    //            Debug.Log("hit enemy");
+
+    //    }
+    //}
 
 }
