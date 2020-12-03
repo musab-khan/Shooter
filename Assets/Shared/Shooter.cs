@@ -9,6 +9,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] Transform aimTarget;
 
+    [SerializeField] CrossHair crossHair;
+
     //[HideInInspector]
     public Transform muzzle;
 
@@ -17,9 +19,7 @@ public class Shooter : MonoBehaviour
 
     private void Awake()
     {
-       // muzzle = transform.Find("Muzzle");
         transform.SetParent(hand);
-        //aimTarget = GameObject.Find("Crosshair").transform;
     }
 
     public virtual void Fire()
@@ -31,24 +31,11 @@ public class Shooter : MonoBehaviour
 
         nextFireAllowed = Time.time + rateOfFire;
 
-        //muzzle.LookAt(aimTarget);
+        Vector2 direction = new Vector2(crossHair.hitPoint.x, crossHair.hitPoint.y);
+        muzzle.LookAt(direction);
         Instantiate(projectile, muzzle.position, muzzle.rotation);
 
         canFire = true;
         
     }
-
-    //private void Update()
-    //{
-    //    Ray ray = Camera.main.ScreenPointToRay();
-    //    RaycastHit hitInfo;
-
-    //    if (Physics.Raycast(ray, out hitInfo))
-    //    {
-    //        if (hitInfo.collider.tag.Equals("Enemy"))
-    //            Debug.Log("hit enemy");
-
-    //    }
-    //}
-
 }

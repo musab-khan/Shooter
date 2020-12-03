@@ -9,9 +9,11 @@ public class ThirdPersonCamera : MonoBehaviour
     public Transform cameraLookTarget;
     public Player localPlayer;
 
-    void Awake()
+    void Start()
     {
-        GameManager.Instance.OnLocalPlayerJoined += HandleOnLocalPlayerJoined;
+        //GameManager.Instance.OnLocalPlayerJoined += HandleOnLocalPlayerJoined;
+        //Debug.Log(cameraLookTarget);
+        //Debug.Log(localPlayer);
     }
 
     void HandleOnLocalPlayerJoined (Player player)
