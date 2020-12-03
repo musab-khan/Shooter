@@ -16,11 +16,13 @@ public class EnemyAI : MonoBehaviour
     float wanderRadius = 7f;
     private Vector3 wanderPoint;
     Animator anim;
+    EnemyShooter shooter;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        shooter = GetComponent<EnemyShooter>();
         //wanderPoint = RandomWanderPoint();
         //target = PossibleTargets[Random.Range(0, PossibleTargets.Length)];
     }
@@ -98,6 +100,7 @@ public class EnemyAI : MonoBehaviour
 
     public virtual void ShootLogic()
     {
+        shooter.Fire();
         agent.velocity = Vector3.zero;
         anim.SetBool("isWalking", false);
         anim.SetTrigger("shoot");

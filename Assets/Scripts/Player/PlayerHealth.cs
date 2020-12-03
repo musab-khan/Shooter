@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeLookAt : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    public Transform aimTarget;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +13,6 @@ public class CubeLookAt : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(aimTarget);
+        
     }
 }
