@@ -31,8 +31,7 @@ public class Shooter : MonoBehaviour
 
         nextFireAllowed = Time.time + rateOfFire;
 
-        Vector2 direction = new Vector2(crossHair.hitPoint.x, crossHair.hitPoint.y);
-        muzzle.LookAt(direction);
+        muzzle.LookAt(crossHair.hitPoint);
         Instantiate(projectile, muzzle.position, muzzle.rotation);
 
         canFire = true;

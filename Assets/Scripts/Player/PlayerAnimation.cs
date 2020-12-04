@@ -8,6 +8,7 @@ public class PlayerAnimation : MonoBehaviour
     void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+
     }
 
     // Update is called once per frame

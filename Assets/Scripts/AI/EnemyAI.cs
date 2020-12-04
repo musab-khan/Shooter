@@ -6,17 +6,18 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     public GameObject player;
-    private bool isAware = false;
+    public bool isAware = false;
     public float fieldOfView = 40f;
     public float viewDistance = 10f;
     public float shootDistance = 5f;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     //public Transform[] PossibleTargets;
     //protected Transform target;
     float wanderRadius = 7f;
     private Vector3 wanderPoint;
-    Animator anim;
-    EnemyShooter shooter;
+    public EnemyShooter shooter;
+    public Animator anim;
+    public bool intelligent = false;
 
     private void Awake()
     {
@@ -31,20 +32,20 @@ public class EnemyAI : MonoBehaviour
         if (isAware)
         {
             anim.SetBool("isWalking", true);
-            agent.SetDestination(CalculateDestination());
-            if (Vector3.Distance(player.transform.position, transform.position) < shootDistance)
-            {
-                ShootLogic();
-            }
+            agent.SetDestination(CalculateDestination().position);
+            ShootLogic();
         }
         else
         {
+            if (intelligent)
+                IntelligentSearch();
             //Wander();
-            SearchForPlayer();
+            else
+                SearchForPlayer();
         }
     }
 
-    void SearchForPlayer ()
+    public virtual void SearchForPlayer ()
     {
 
         if (Vector3.Angle(Vector3.forward, transform.InverseTransformPoint(player.transform.position)) < fieldOfView / 2f)
@@ -53,19 +54,22 @@ public class EnemyAI : MonoBehaviour
             {
                 transform.LookAt(player.transform.position);
                 RaycastHit hit;
-                //if (Physics.Raycast(transform.position + new Vector3(0, 1.0f, 2f), transform.forward, out hit))
-                //{
+                if (Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0f), transform.forward, out hit))
+                {
+                    Debug.Log(hit.collider.gameObject.tag);
+                    if (hit.collider.CompareTag("Player"))
+                        OnAware();
+                }
 
-                //    Debug.DrawLine(transform.position + new Vector3(0, 1.5f, 0), hit.point);
-                //    Debug.Log(hit.collider.gameObject.tag);
-                //    if (hit.collider.CompareTag("Player"))
-                //        OnAware();
-                //}
-
-                OnAware();
+                //OnAware();
 
             }
             }
+    }
+
+    public virtual void IntelligentSearch()
+    {
+        //intelligent logic
     }
 
     public void OnAware()
@@ -93,18 +97,21 @@ public class EnemyAI : MonoBehaviour
         return new Vector3(navHit.position.x, transform.position.y, navHit.position.z);
     }
 
-    public virtual Vector3 CalculateDestination()
+    public virtual Transform CalculateDestination()
     {
-        return player.transform.position;
+        return player.transform;
     }
 
     public virtual void ShootLogic()
     {
-        shooter.Fire();
-        agent.velocity = Vector3.zero;
-        anim.SetBool("isWalking", false);
-        anim.SetTrigger("shoot");
-        isAware = false;
+        if (Vector3.Distance(player.transform.position, transform.position) < shootDistance)
+        {
+            shooter.Fire();
+            agent.velocity = Vector3.zero;
+            anim.SetBool("isWalking", false);
+            anim.SetTrigger("shoot");
+            isAware = false;
+        }
     }
 
 

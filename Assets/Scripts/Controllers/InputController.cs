@@ -10,12 +10,14 @@ public class InputController : MonoBehaviour
     public bool Fire1;
     FixedJoystick leftJoystick;
     FixedTouchField touchField;
+    FixedButton shootBtn;
     public bool mobileControls = false;
 
     private void Awake()
     {
         leftJoystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
         touchField = GameObject.Find("TouchField").GetComponent<FixedTouchField>();
+        shootBtn = GameObject.Find("ShootButton").GetComponent<FixedButton>();
     }
 
     void Update()
@@ -33,6 +35,6 @@ public class InputController : MonoBehaviour
             Horizontal = leftJoystick.Horizontal;
             MouseInput = new Vector2(touchField.TouchDist.x, touchField.TouchDist.y);
         }
-        Fire1 = Input.GetKey(KeyCode.Space);
+        Fire1 = shootBtn.Pressed;
     }
 }

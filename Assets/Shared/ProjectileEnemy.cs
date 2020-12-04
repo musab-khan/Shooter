@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Projectile : MonoBehaviour
+public class ProjectileEnemy : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float TimeToLeave;
@@ -21,9 +21,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Player")
         {
-            var health = other.gameObject.GetComponent<EnemyHealth>();
+            var health = other.gameObject.GetComponent<PlayerHealth>();
             health.TakeDamage(damage);
         }     
     }

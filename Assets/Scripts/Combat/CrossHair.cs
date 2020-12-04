@@ -24,7 +24,7 @@ public class CrossHair : MonoBehaviour
 
     private void Awake()
     {
-        layerMask = 1 << 2;
+        layerMask = 1 << 11;
         layerMask = ~layerMask;
     }
     public void LookHeight(float value)
@@ -55,14 +55,11 @@ public class CrossHair : MonoBehaviour
 
         Vector2 rayDirection = new Vector2(crossPos.x, Screen.height - crossPos.y);
         Ray ray = Camera.main.ScreenPointToRay(rayDirection);
-
-        Ray ray2 = new Ray(muzzle.position, Camera.main.ScreenToWorldPoint(crossPos));
         RaycastHit hit; 
 
         if (Physics.Raycast(ray, out hit, 300f, layerMask))
         {
             hitPoint = hit.point;
-
             if (hit.collider.tag == "Enemy")
             {
                 Debug.DrawLine(ray.origin, hit.point);
