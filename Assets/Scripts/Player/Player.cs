@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
     void Awake()
     {
         playerInput = GameManager.Instance.InputController;
-        GameManager.Instance.LocalPlayer = this;
     }
 
     // Update is called once per frame
@@ -59,6 +58,7 @@ public class Player : MonoBehaviour
 
         transform.Rotate(Vector3.up * mouseInput.x * MouseControl.Senstivity.x);
 
-        CrossHair.LookHeight(mouseInput.y * MouseControl.Senstivity.y);
+        //test.LookHeight(mouseInput.y * MouseControl.Senstivity.y);
+
     }
 }

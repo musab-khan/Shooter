@@ -8,26 +8,26 @@ public class PlayerHealth : MonoBehaviour
     Animator anim;
     [SerializeField] float hitPoints;
     [SerializeField] Slider healthBar;
-    float damageTaken;
+    float HitPointsRemaining;
     public UIManager UIManage;
 
-    // Start is called before the first frame update
-    private void Start()
+    void Awake()
     {
         healthBar.value = 1;
+        HitPointsRemaining = hitPoints;
+        AdsManager.ReviveEvent += RestoreHealth;
+        anim = GetComponentInChildren<Animator>();
     }
+
+    private void OnDisable()
+    {
+        AdsManager.ReviveEvent -= RestoreHealth;
+    }
+
 
     private void Update()
     {
         healthBar.value = HitPointsRemaining / hitPoints;
-    }
-
-    public float HitPointsRemaining
-    {
-        get
-        {
-            return hitPoints - damageTaken;
-        }
     }
 
     public bool isAlive
@@ -38,30 +38,34 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        anim = GetComponentInChildren<Animator>();
-    }
-
     public void TakeDamage(float amount)
     {
-        damageTaken += amount;
+        HitPointsRemaining -= amount;
         if (HitPointsRemaining <= 0)
+        {
             Die();
+            HitPointsRemaining = 0;
+        }
+            
     }
 
     public void Die()
     {
+        Debug.Log("I died");
         anim.SetLayerWeight(1, 0);
         StartCoroutine(deathWait());
     }
 
     IEnumerator deathWait()
     {
-        anim.SetTrigger("Death");
+        PlayerAnimation.AnimationController.onDeath();
         yield return new WaitForSeconds(4);
         Time.timeScale = 0;
-        UIManage.EnablePanel();
+        UIManage.EnableADpanel();
+    }
 
+    public void RestoreHealth()
+    {
+        HitPointsRemaining = hitPoints;
     }
 }

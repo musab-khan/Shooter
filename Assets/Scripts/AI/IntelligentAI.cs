@@ -13,6 +13,7 @@ public class IntelligentAI : EnemyAI
     float goBackTime = 5f;
     float attackAllowed;
 
+
     public override Transform CalculateDestination()
     {
         intelligent = true;
@@ -67,5 +68,10 @@ public class IntelligentAI : EnemyAI
             agent.SetDestination(target.position);
     }
 
+    public override void NotAware()
+    {
+        base.NotAware();
+        intelligent = false;
+    }
 
 }

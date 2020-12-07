@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class testCrosshair : MonoBehaviour
 {
-    Vector2 aimposition;
+    float lookHeight;
+    public float maxAngle;
+    public float minAngle;
+    InputController controller;
 
-    public void aimtarget(Vector2 input)
+    private void Awake()
     {
-        aimposition = input;
+        controller = GameManager.Instance.InputController;
     }
-    void Update()
+
+    public void LookHeight(float value)
     {
-        transform.position = aimposition ;
+        //lookHeight += value;
+        //Debug.Log(lookHeight);
+
+        //if (lookHeight > maxAngle || lookHeight < minAngle)
+        //    lookHeight -= value;
+
+        transform.position = new Vector3(controller.MouseInput.x, controller.MouseInput.y, 0);
     }
 }

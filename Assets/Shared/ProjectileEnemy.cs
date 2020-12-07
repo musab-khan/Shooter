@@ -12,6 +12,12 @@ public class ProjectileEnemy : MonoBehaviour
     private void Start()
     {
         Destroy(gameObject, TimeToLeave);
+        AdsManager.ReviveEvent += DestroyOnRevive;
+    }
+
+    private void OnDisable()
+    {
+        AdsManager.ReviveEvent -= DestroyOnRevive;
     }
 
     private void Update()
@@ -25,6 +31,12 @@ public class ProjectileEnemy : MonoBehaviour
         {
             var health = other.gameObject.GetComponent<PlayerHealth>();
             health.TakeDamage(damage);
+            Destroy(gameObject);
         }     
+    }
+
+    void DestroyOnRevive()
+    {
+        Destroy(gameObject);
     }
 }

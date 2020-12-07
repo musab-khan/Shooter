@@ -18,14 +18,24 @@ public class EnemyAI : MonoBehaviour
     public EnemyShooter shooter;
     public Animator anim;
     public bool intelligent = false;
+    Transform initialPos;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         shooter = GetComponent<EnemyShooter>();
+        AdsManager.ReviveEvent += NotAware;
+        AdsManager.ReviveEvent += goToInitialPos;
+        initialPos = transform;
         //wanderPoint = RandomWanderPoint();
         //target = PossibleTargets[Random.Range(0, PossibleTargets.Length)];
+    }
+
+    private void OnDisable()
+    {
+        AdsManager.ReviveEvent -= NotAware;
+        AdsManager.ReviveEvent -= goToInitialPos;
     }
     private void Update()
     {
@@ -78,6 +88,16 @@ public class EnemyAI : MonoBehaviour
     public void OnAware()
     {
         isAware = true;
+    }
+
+    public virtual void NotAware()
+    {
+        isAware = false;
+    }
+
+    public void goToInitialPos()
+    {
+        agent.SetDestination(initialPos.position);
     }
 
     //public void Wander()

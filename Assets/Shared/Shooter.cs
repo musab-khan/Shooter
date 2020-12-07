@@ -9,7 +9,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] Transform aimTarget;
 
-    [SerializeField] CrossHair crossHair;
+    [SerializeField] GameObject crossHair;
     [SerializeField] ParticleSystem flash;
 
     //[HideInInspector]
@@ -31,8 +31,8 @@ public class Shooter : MonoBehaviour
             return;
 
         nextFireAllowed = Time.time + rateOfFire;
-        Debug.DrawRay(muzzle.position, crossHair.rayDirection);
-        muzzle.LookAt(crossHair.rayDirection);
+        Debug.DrawRay(muzzle.position, crossHair.transform.position);
+        muzzle.LookAt(crossHair.transform);
         flash.Play();
         Instantiate(projectile, muzzle.position, muzzle.rotation);
 
