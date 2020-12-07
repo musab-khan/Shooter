@@ -51,6 +51,6 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     public void OnPointerUp(PointerEventData eventData)
     {
         Pressed = false;
-    }
+    } 
 
 }

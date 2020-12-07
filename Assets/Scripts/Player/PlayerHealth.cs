@@ -1,15 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
     Animator anim;
     [SerializeField] float hitPoints;
+    [SerializeField] Slider healthBar;
     float damageTaken;
     public UIManager UIManage;
 
     // Start is called before the first frame update
+    private void Start()
+    {
+        healthBar.value = 1;
+    }
+
+    private void Update()
+    {
+        healthBar.value = HitPointsRemaining / hitPoints;
+    }
 
     public float HitPointsRemaining
     {
@@ -42,8 +53,15 @@ public class PlayerHealth : MonoBehaviour
     public void Die()
     {
         anim.SetLayerWeight(1, 0);
+        StartCoroutine(deathWait());
+    }
+
+    IEnumerator deathWait()
+    {
         anim.SetTrigger("Death");
+        yield return new WaitForSeconds(4);
         Time.timeScale = 0;
         UIManage.EnablePanel();
+
     }
 }

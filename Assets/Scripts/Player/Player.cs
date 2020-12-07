@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(MoveController))]
 public class Player : MonoBehaviour
 {
+    public testCrosshair test;
+
     [System.Serializable]
     public class MouseInput
     {

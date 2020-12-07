@@ -10,6 +10,7 @@ public class Shooter : MonoBehaviour
     [SerializeField] Transform aimTarget;
 
     [SerializeField] CrossHair crossHair;
+    [SerializeField] ParticleSystem flash;
 
     //[HideInInspector]
     public Transform muzzle;
@@ -30,8 +31,9 @@ public class Shooter : MonoBehaviour
             return;
 
         nextFireAllowed = Time.time + rateOfFire;
-
-        muzzle.LookAt(crossHair.hitPoint);
+        Debug.DrawRay(muzzle.position, crossHair.rayDirection);
+        muzzle.LookAt(crossHair.rayDirection);
+        flash.Play();
         Instantiate(projectile, muzzle.position, muzzle.rotation);
 
         canFire = true;

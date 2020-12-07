@@ -1,14 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [SerializeField] Slider healthBar;
     [SerializeField] float hitPoints;
     float damageTaken;
 
     // Start is called before the first frame update
 
+    private void Start()
+    {
+        healthBar.value = 1;
+    }
+
+    private void Update()
+    {
+        healthBar.value = HitPointsRemaining / hitPoints;
+        healthBar.transform.LookAt(Camera.main.transform);
+    }
     public float HitPointsRemaining
     {
         get
@@ -36,5 +48,4 @@ public class EnemyHealth : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
 }

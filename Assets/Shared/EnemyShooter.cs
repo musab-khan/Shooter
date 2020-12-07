@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyShooter : MonoBehaviour
 {
     [SerializeField] float rateOfFire = 0.3f;
-    [SerializeField] Projectile projectile;
+    [SerializeField] ProjectileEnemy projectile;
     [SerializeField] Transform aimTarget;
 
     public Transform muzzle;

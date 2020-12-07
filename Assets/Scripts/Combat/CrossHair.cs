@@ -18,7 +18,7 @@ public class CrossHair : MonoBehaviour
 
     bool isLocked = false;
 
-    public Vector3 hitPoint;
+    public Vector2 rayDirection;
 
     public Transform muzzle;
 
@@ -53,16 +53,14 @@ public class CrossHair : MonoBehaviour
     {
         isLocked = false;
 
-        Vector2 rayDirection = new Vector2(crossPos.x, Screen.height - crossPos.y);
+        rayDirection = new Vector2(crossPos.x, Screen.height - crossPos.y);
         Ray ray = Camera.main.ScreenPointToRay(rayDirection);
         RaycastHit hit; 
 
         if (Physics.Raycast(ray, out hit, 300f, layerMask))
         {
-            hitPoint = hit.point;
             if (hit.collider.tag == "Enemy")
             {
-                Debug.DrawLine(ray.origin, hit.point);
                 isLocked = true;
             }
 

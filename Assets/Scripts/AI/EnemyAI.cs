@@ -31,14 +31,19 @@ public class EnemyAI : MonoBehaviour
     {
         if (isAware)
         {
+            isAware = false;
             anim.SetBool("isWalking", true);
             agent.SetDestination(CalculateDestination().position);
-            ShootLogic();
+            EnemyBehaviour();
+
         }
         else
         {
             if (intelligent)
+            {
                 IntelligentSearch();
+            }
+                
             //Wander();
             else
                 SearchForPlayer();
@@ -61,8 +66,6 @@ public class EnemyAI : MonoBehaviour
                         OnAware();
                 }
 
-                //OnAware();
-
             }
             }
     }
@@ -77,32 +80,32 @@ public class EnemyAI : MonoBehaviour
         isAware = true;
     }
 
-    public void Wander()
-    {
-        if (Vector3.Distance (transform.position, wanderPoint) < 2f)
-        {
-            wanderPoint = RandomWanderPoint();
-        }
-        else
-        {
-            agent.SetDestination(wanderPoint);
-        }
-    }
+    //public void Wander()
+    //{
+    //    if (Vector3.Distance (transform.position, wanderPoint) < 2f)
+    //    {
+    //        wanderPoint = RandomWanderPoint();
+    //    }
+    //    else
+    //    {
+    //        agent.SetDestination(wanderPoint);
+    //    }
+    //}
 
-    public Vector3 RandomWanderPoint()
-    {
-        Vector3 randomPoint = (Random.insideUnitSphere * wanderRadius) + transform.position;
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(randomPoint, out navHit, wanderRadius, -1);
-        return new Vector3(navHit.position.x, transform.position.y, navHit.position.z);
-    }
+    //public Vector3 RandomWanderPoint()
+    //{
+    //    Vector3 randomPoint = (Random.insideUnitSphere * wanderRadius) + transform.position;
+    //    NavMeshHit navHit;
+    //    NavMesh.SamplePosition(randomPoint, out navHit, wanderRadius, -1);
+    //    return new Vector3(navHit.position.x, transform.position.y, navHit.position.z);
+    //}
 
     public virtual Transform CalculateDestination()
     {
         return player.transform;
     }
 
-    public virtual void ShootLogic()
+    public virtual void EnemyBehaviour()
     {
         if (Vector3.Distance(player.transform.position, transform.position) < shootDistance)
         {
@@ -110,9 +113,6 @@ public class EnemyAI : MonoBehaviour
             agent.velocity = Vector3.zero;
             anim.SetBool("isWalking", false);
             anim.SetTrigger("shoot");
-            isAware = false;
         }
     }
-
-
 }
