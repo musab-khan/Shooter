@@ -11,8 +11,6 @@ public class EnemyAI : MonoBehaviour
     public float viewDistance = 10f;
     public float shootDistance = 5f;
     public NavMeshAgent agent;
-    //public Transform[] PossibleTargets;
-    //protected Transform target;
     float wanderRadius = 7f;
     private Vector3 wanderPoint;
     public EnemyShooter shooter;
@@ -28,8 +26,6 @@ public class EnemyAI : MonoBehaviour
         AdsManager.ReviveEvent += NotAware;
         AdsManager.ReviveEvent += goToInitialPos;
         initialPos = transform;
-        //wanderPoint = RandomWanderPoint();
-        //target = PossibleTargets[Random.Range(0, PossibleTargets.Length)];
     }
 
     private void OnDisable()
@@ -102,14 +98,7 @@ public class EnemyAI : MonoBehaviour
 
     //public void Wander()
     //{
-    //    if (Vector3.Distance (transform.position, wanderPoint) < 2f)
-    //    {
-    //        wanderPoint = RandomWanderPoint();
-    //    }
-    //    else
-    //    {
-    //        agent.SetDestination(wanderPoint);
-    //    }
+        
     //}
 
     //public Vector3 RandomWanderPoint()

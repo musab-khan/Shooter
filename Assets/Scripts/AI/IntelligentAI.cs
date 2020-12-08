@@ -5,9 +5,8 @@ using UnityEngine;
 public class IntelligentAI : EnemyAI
 {
     public Transform[] PossibleHideouts;
-    public Transform[] ShootSpots;
     int hideoutIndex = 0;
-    public Transform target;
+    Transform target;
     float maxDistance = 1000f;
     float attackDistance = 50f;
     float goBackTime = 5f;
